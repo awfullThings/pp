@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "roles")
@@ -21,34 +22,19 @@ public class Role implements GrantedAuthority {
 
     public  Role(){
     }
-    public Role(String role) {
-        this.name = role;
+    public Role(int id) {
+        this.id = id;
     }
 
     public Role(int id, String role) {
         this.id = id;
         this.name = role;
     }
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
     public String getNoPrefix() {
         String prefix = "ROLE_";
         return name.substring(prefix.length());
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getRole() {
         return name; }
@@ -64,7 +50,19 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return getRole();
+        return name;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return id == role.id && Objects.equals(name, role.name) && Objects.equals(users, role.users);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, users);
     }
 
 

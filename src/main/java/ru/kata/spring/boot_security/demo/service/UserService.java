@@ -8,7 +8,9 @@ public interface UserService {
     List<User> getAllUsers();
     User getUser (int id);
     void saveUser(User user);
-    void update(User updatedUser);
+    void updateUser(User updatedUser);
     void delete(int id);
+
+    User getCurrentUser();
 
 }

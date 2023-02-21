@@ -4,7 +4,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,7 +25,7 @@ public class User implements UserDetails {
 
     @Column(name = "age")
     private String age;
-
+    @Email
     @Column(name = "email")
     private String email;
 
@@ -38,7 +40,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 
-    private Set <Role> roles;
+    private Set <Role> roles = new HashSet<>();
 
     public User() {
     }
@@ -83,19 +85,24 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public String getFirstName() {
+    public String getRolesToString() {
+        String s = getRoles().toString().replaceAll("^\\[|\\]$", "");
+        return s.replace("ROLE_", "");
+    }
+
+    public String getFirstname() {
         return firstname;
     }
 
-    public void setFirstName(String firstname) {
+    public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
-    public String getLastName() {
+    public String getLastname() {
         return lastname;
     }
 
-    public void setLastName(String lastname) {
+    public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
@@ -141,9 +148,12 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", roles=" + getRoles() +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstname + '\'' +
+                ", lastName='" + lastname + '\'' +
+                ", age=" + age +
+                ", roles=" + roles +
                 '}';
     }
 
@@ -151,29 +161,12 @@ public class User implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         User user = (User) o;
-
-        if (id != user.id) return false;
-        if (!Objects.equals(firstname, user.firstname)) return false;
-        if (!Objects.equals(lastname, user.lastname)) return false;
-        if (!Objects.equals(age, user.age)) return false;
-        if (!Objects.equals(email, user.email)) return false;
-        if (!Objects.equals(username, user.username)) return false;
-        if (!Objects.equals(password, user.password)) return false;
-        return Objects.equals(roles, user.roles);
+        return id == user.id && age == user.age && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(roles, user.roles);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        result = 31 * result + (age != null ? age.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (roles != null ? roles.hashCode() : 0);
-        return result;
+        return Objects.hash(id, password, email, firstname, lastname, age, roles);
     }
 }

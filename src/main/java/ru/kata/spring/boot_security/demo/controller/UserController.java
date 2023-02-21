@@ -30,6 +30,7 @@ public class UserController {
             throw new AuthenticationException();
         }
         model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("userCurrent", userService.getCurrentUser());
         return "users/get_user";
     }
 
