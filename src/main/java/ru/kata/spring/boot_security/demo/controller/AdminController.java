@@ -28,7 +28,7 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String showAllUsers(Model model){
+    public String showAllUsers(Model model) {
         model.addAttribute("users", usersService.getAllUsers());
         model.addAttribute("newUser", new User());
         model.addAttribute("roles", roleService.getAll());
@@ -37,20 +37,22 @@ public class AdminController {
     }
 
     @PostMapping
-    public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){
+    public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
 
-      usersService.saveUser(user);
+        usersService.saveUser(user);
         return "redirect:/admin";
     }
+
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") @Valid User user,
-                         BindingResult bindingResult, @PathVariable("id") int id){
+                         BindingResult bindingResult, @PathVariable("id") int id) {
 
-     usersService.updateUser(user);
+        usersService.updateUser(user);
         return "redirect:/admin";
     }
+
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id){
+    public String delete(@PathVariable("id") int id) {
         usersService.delete(id);
         return "redirect:/admin";
     }

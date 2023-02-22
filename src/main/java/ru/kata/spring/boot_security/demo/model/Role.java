@@ -12,10 +12,10 @@ import java.util.Objects;
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "name", unique = true)
+    private String rolename;
     @Transient
     @ManyToMany(mappedBy = "roles")
     private List<User> users = new ArrayList<>();
@@ -28,41 +28,41 @@ public class Role implements GrantedAuthority {
 
     public Role(int id, String role) {
         this.id = id;
-        this.name = role;
+        this.rolename = role;
     }
     public String getNoPrefix() {
         String prefix = "ROLE_";
-        return name.substring(prefix.length());
+        return rolename.substring(prefix.length());
     }
 
 
     public String getRole() {
-        return name; }
+        return rolename; }
 
     public void setRole(String role) {
-        this.name = role;
+        this.rolename = role;
     }
 
     @Override
     public String getAuthority() {
-        return name;
+        return rolename;
     }
 
     @Override
     public String toString() {
-        return name;
+        return rolename;
     }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role = (Role) o;
-        return id == role.id && Objects.equals(name, role.name) && Objects.equals(users, role.users);
+        return id == role.id && Objects.equals(rolename, role.rolename) && Objects.equals(users, role.users);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, users);
+        return Objects.hash(id, rolename, users);
     }
 
 

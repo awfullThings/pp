@@ -1,16 +1,17 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kata.spring.boot_security.demo.model.User;
+
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import javax.security.sasl.AuthenticationException;
+
+import java.security.Principal;
 
 
 @Controller
@@ -24,11 +25,8 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    String getUser (@PathVariable("id") int id, Model model) throws AuthenticationException {
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (currentUser.getRoles().stream().allMatch(r-> r.getRole().equals("ROLE_USER")) && !(currentUser.getId() == id)){
-            throw new AuthenticationException();
-        }
+    public String getUser (@PathVariable("id") int id, Model model, Principal principal) {
+        UserDetails user = userService.loadUserByUsername(principal.getName());
         model.addAttribute("user", userService.getUser(id));
         model.addAttribute("userCurrent", userService.getCurrentUser());
         return "users/get_user";
