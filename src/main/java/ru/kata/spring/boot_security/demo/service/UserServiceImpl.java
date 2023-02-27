@@ -36,11 +36,11 @@ public class UserServiceImpl implements UserService{
         return user.get();
     }
 
-    @Override
-    public User findUserById(long userId) {
-        Optional<User> userFromDb = userRepository.findById(userId);
-        return userFromDb.orElse(new User());
-    }
+//    @Override
+//    public User findUserById(long userId) {
+//        Optional<User> userFromDb = userRepository.findById(userId);
+//        return userFromDb.orElse(new User());
+//    }
 
     @Override
     public boolean deleteUser(long userId) {
@@ -81,9 +81,9 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteById(id);
     }
 
-    @Override
-    public User getCurrentUser() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
+//    @Override
+//    public User getCurrentUser() {
+//        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    }
 
 }
