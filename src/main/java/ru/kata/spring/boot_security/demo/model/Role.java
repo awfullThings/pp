@@ -20,8 +20,9 @@ public class Role implements GrantedAuthority {
     @ManyToMany(mappedBy = "roles")
     private List<User> users = new ArrayList<>();
 
-    public  Role(){
+    public Role() {
     }
+
     public Role(int id) {
         this.id = id;
     }
@@ -30,6 +31,7 @@ public class Role implements GrantedAuthority {
         this.id = id;
         this.rolename = role;
     }
+
     public String getNoPrefix() {
         String prefix = "ROLE_";
         return rolename.substring(prefix.length());
@@ -37,7 +39,8 @@ public class Role implements GrantedAuthority {
 
 
     public String getRole() {
-        return rolename; }
+        return rolename;
+    }
 
     public void setRole(String role) {
         this.rolename = role;
@@ -52,6 +55,7 @@ public class Role implements GrantedAuthority {
     public String toString() {
         return rolename;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

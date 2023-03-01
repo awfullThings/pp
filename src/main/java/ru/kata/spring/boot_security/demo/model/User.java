@@ -36,14 +36,15 @@ public class User implements UserDetails {
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="users_roles",
+    @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 
-    private Set <Role> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
+
     public User(int id, String firstname, String lastname, String age, String email, String userName, String password, Set<Role> roles) {
         this.id = id;
         this.firstname = firstname;
@@ -62,6 +63,7 @@ public class User implements UserDetails {
     public void setId(int id) {
         this.id = id;
     }
+
     @Override
     public String getUsername() {
         return username;
@@ -70,13 +72,16 @@ public class User implements UserDetails {
     public void setUsername(String userName) {
         this.username = userName;
     }
+
     @Override
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -129,11 +134,13 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return  true;
+        return true;
     }
 
     @Override
-    public boolean isAccountNonLocked() { return true; }
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
     @Override
     public boolean isCredentialsNonExpired() {
@@ -144,6 +151,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
     @Override
     public String toString() {
         return "User{" +

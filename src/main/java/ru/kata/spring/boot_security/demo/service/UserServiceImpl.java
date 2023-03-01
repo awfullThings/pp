@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -35,12 +35,6 @@ public class UserServiceImpl implements UserService{
         }
         return user.get();
     }
-
-//    @Override
-//    public User findUserById(long userId) {
-//        Optional<User> userFromDb = userRepository.findById(userId);
-//        return userFromDb.orElse(new User());
-//    }
 
     @Override
     public boolean deleteUser(long userId) {
@@ -80,10 +74,5 @@ public class UserServiceImpl implements UserService{
     public void delete(long id) {
         userRepository.deleteById(id);
     }
-
-//    @Override
-//    public User getCurrentUser() {
-//        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//    }
 
 }

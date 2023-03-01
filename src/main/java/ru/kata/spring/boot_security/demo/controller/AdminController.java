@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,21 +32,18 @@ public class AdminController {
         model.addAttribute("users", usersService.getAllUsers());
         model.addAttribute("newUser", new User());
         model.addAttribute("roles", roleService.getAll());
-        model.addAttribute("userCurrent",usersService.loadUserByUsername(principal.getName()));
+        model.addAttribute("userCurrent", usersService.loadUserByUsername(principal.getName()));
         return "admin/admin_control_panel";
     }
 
     @PostMapping
     public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-
         usersService.saveUser(user);
         return "redirect:/admin";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") @Valid User user,
-                         BindingResult bindingResult, @PathVariable("id") int id) {
-
+    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @PathVariable("id") int id) {
         usersService.updateUser(user);
         return "redirect:/admin";
     }
