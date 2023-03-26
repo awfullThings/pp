@@ -14,16 +14,9 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping
-    public String getUser(Model model, Principal principal) {
-        model.addAttribute("userCurrent", userService.loadUserByUsername(principal.getName()));
-        return "users/get_user";
+    public String getUser() {
+      return "users/get_user";
     }
 
 }
