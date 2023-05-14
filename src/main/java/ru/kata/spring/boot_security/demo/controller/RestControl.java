@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/admin")
 public class RestControl {
     private final UserService userService;
 
@@ -43,7 +43,7 @@ public class RestControl {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/users/user")
+    @GetMapping("/user")
     public ResponseEntity<User> getUser(@AuthenticationPrincipal User user) {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

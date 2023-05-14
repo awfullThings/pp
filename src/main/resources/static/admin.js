@@ -2,7 +2,7 @@ const showNavbarInfo = (user) => {
     document.getElementById("showUser").innerHTML =
         `<h3>${user.username} <small>with roles:</small> ${user.showRoles}</h3>`
 }
-fetch('api/users/user')
+fetch('api/admin/user')
     .then(response => response.json())
     .then(data => showNavbarInfo(data))
     .catch(error => console.log(error))
@@ -31,13 +31,13 @@ const showUsers = (users) => {
     })
     container.innerHTML = usersInfo
 }
-fetch('/api/users')
+fetch('/api/admin/users')
     .then(response => response.json())
     .then(data => showUsers(data))
     .catch(error => console.log(error))
 
 const reloadShowUsers = () => {
-    fetch('/api/users')
+    fetch('/api/admin/users')
         .then(response => response.json())
         .then(data => {
             usersInfo = ''
@@ -59,7 +59,7 @@ const showUser = (user) => {
         </tr>`
     container.innerHTML = userInfo
 }
-fetch('api/users/user')
+fetch('api/admin/user')
     .then(response => response.json())
     .then(data => showUser(data))
     .catch(error => console.log(error))
@@ -144,7 +144,7 @@ let idForm = 0
 on(document, 'click', '.btnEdit', e => {
     const row = e.target.parentNode.parentNode
     idForm = row.firstElementChild.innerHTML
-    fetch('/api/users/' + idForm, {
+    fetch('/api/admin/' + idForm, {
         method: 'GET'
     })
         .then(response => response.json())
@@ -175,7 +175,7 @@ on(document, 'click', '.btnEdit', e => {
 editForm.addEventListener('submit', (e) => {
     e.preventDefault()
     let listRoles = roleArray(document.getElementById('userRoleEdit'))
-    fetch('/api/users', {
+    fetch('/api/admin/users', {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json'
@@ -210,7 +210,7 @@ const rolesDelete = document.getElementById('userRoleDel')
 on(document, 'click', '.btnDelete', e => {
     const row = e.target.parentNode.parentNode
     idForm = row.firstElementChild.innerHTML
-    fetch('/api/users/' + idForm, {
+    fetch('/api/admin/users/' + idForm, {
         method: 'GET'
     })
         .then(response => response.json())
@@ -239,7 +239,7 @@ on(document, 'click', '.btnDelete', e => {
 
 deleteForm.addEventListener('submit', (e) => {
     e.preventDefault()
-    fetch('/api/users/' + idForm, {
+    fetch('/api/admin/users/' + idForm, {
         method: 'DELETE'
     })
         .then(data => showUsers(data))
